@@ -347,6 +347,67 @@ body {
 .business-panel.open > .business-inner {
   overflow: visible;
 }
+.family-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: hidden;
+  margin-top: 0;
+  padding: 0 24px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #fffaf0, #f6f9ff);
+  border: 1px solid transparent;
+  transition: grid-template-rows 0.35s ease, opacity 0.3s ease, margin 0.35s;
+}
+.family-panel > * { min-height: 0; }
+.family-panel.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 26px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-color: #dce5f3;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.family-panel.open > .family-inner { overflow: visible; }
+.family-status-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.spouse-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 20px; }
+.spouse-options label { position: relative; cursor: pointer; }
+.spouse-options input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.spouse-options span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+.spouse-options span::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  border: 2px solid #a8b4c7;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: inset 0 0 0 3px #fff;
+}
+.spouse-options input:checked + span { color: var(--green-dark); background: #eef4ff; border-color: #8fafe8; }
+.spouse-options input:checked + span::before { background: var(--green); border-color: var(--green); }
+.spouse-options input:focus-visible + span { outline: 3px solid rgba(16, 73, 181, 0.15); }
+.spouse-name { display: none; }
+.spouse-name.visible { display: flex; }
+.child-counts { margin-top: 20px; }
+.family-inner > .business-title { margin-bottom: 16px; }
+.family-inner > .business-title span { background: #ffe9aa; }
+.child-group { margin-top: 24px; }
+.child-group h4 { margin: 0 0 14px; font-size: 15px; }
+.child-row { grid-template-columns: minmax(0, 1.5fr) 100px minmax(150px, 1fr); margin-bottom: 14px; }
 .business-panel {
   background: var(--cream);
   border-radius: 18px;
@@ -562,6 +623,13 @@ body {
   .business-panel {
     padding-left: 17px;
     padding-right: 17px;
+  }
+  .family-panel {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+  .child-row {
+    grid-template-columns: 1fr;
   }
   .result-dialog {
     padding: 30px 22px;

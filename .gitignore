@@ -1,34 +1,42 @@
-# Operating system files
-.DS_Store
-Thumbs.db
+# Environment and secrets
+.env
+.env.local
+.env.*.local
 
-# Editor and IDE settings
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+
+# Editors and IDEs
 .idea/
 .vscode/
 *.swp
 *.swo
+*.swn
 
-# Local environment and secrets
-.env
-.env.*
-!.env.example
-
-# Logs and runtime files
+# Logs and temporary files
 *.log
-logs/
-tmp/
-temp/
-cache/
-
-# Dependency directories
-vendor/
-node_modules/
-
-# Test and coverage output
-.phpunit.result.cache
-coverage/
-
-# Local database dumps and backups
-*.sql.gz
+*.tmp
+*.temp
+*.cache
 *.bak
-*.backup
+*.pid
+
+# Local runtime artifacts
+tmp/
+cache/

@@ -18,7 +18,31 @@ CREATE TABLE IF NOT EXISTS registrations (
     business_name VARCHAR(150) NULL,
     business_category VARCHAR(150) NULL,
     business_address TEXT NULL,
+    marital_status ENUM('Married', 'Unmarried') NOT NULL DEFAULT 'Unmarried',
+    husband_name VARCHAR(100) NULL,
+    wife_name VARCHAR(100) NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     INDEX idx_mobile (mobile),
     INDEX idx_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS family_members (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    registration_id BIGINT UNSIGNED NOT NULL,
+    member_type ENUM('Son', 'Daughter') NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    age TINYINT UNSIGNED NOT NULL,
+    marital_status ENUM('Married', 'Unmarried') NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_family_registration (registration_id),
+    CONSTRAINT fk_family_registration FOREIGN KEY (registration_id) REFERENCES registrations(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS admin_users (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(80) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    is_active TINYINT(1) NOT NULL DEFAULT 1,
+    last_login_at TIMESTAMP NULL DEFAULT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

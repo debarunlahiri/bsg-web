@@ -15,8 +15,8 @@ if (empty($_SESSION['csrf_token'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="assets/style.css">
-    <link rel="stylesheet" href="assets/theme.css">
+    <link rel="stylesheet" href="assets/style.css?v=6">
+    <link rel="stylesheet" href="assets/theme.css?v=6">
 </head>
 <body>
     <main class="page-shell">
@@ -104,6 +104,38 @@ if (empty($_SESSION['csrf_token'])) {
                     </div>
                 </div>
 
+                <div class="section-divider"></div>
+                <div class="form-heading compact">
+                    <span>04</span>
+                    <div><h2>Family details</h2><p>Tell us about your marital status and family</p></div>
+                </div>
+                <fieldset class="occupation-options family-status-options">
+                    <legend class="sr-only">Marital status *</legend>
+                    <label><input type="radio" name="marital_status" value="Married" required><span>Married</span></label>
+                    <label><input type="radio" name="marital_status" value="Unmarried"><span>Unmarried</span></label>
+                </fieldset>
+                <small class="occupation-error" id="maritalStatusError"></small>
+
+                <div class="family-panel" id="familyPanel" aria-hidden="true">
+                    <div class="family-inner">
+                        <div class="business-title"><span>Family</span><h3>Married family details</h3></div>
+                        <div class="spouse-options">
+                            <label><input type="checkbox" name="has_husband" value="1"><span>Husband</span></label>
+                            <label><input type="checkbox" name="has_wife" value="1"><span>Wife</span></label>
+                        </div>
+                        <small class="occupation-error" id="spouseError"></small>
+                        <div class="field-grid two-columns spouse-name-fields">
+                            <label class="field spouse-name" data-spouse="husband"><span>Name of husband *</span><input type="text" name="husband_name" maxlength="100" placeholder="Enter husband's name"><small class="error"></small></label>
+                            <label class="field spouse-name" data-spouse="wife"><span>Name of wife *</span><input type="text" name="wife_name" maxlength="100" placeholder="Enter wife's name"><small class="error"></small></label>
+                        </div>
+                        <div class="field-grid two-columns child-counts">
+                            <label class="field"><span>How many sons?</span><span class="select-wrap"><select name="son_count" id="sonCount"><option value="0">0</option></select><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span></label>
+                            <label class="field"><span>How many daughters?</span><span class="select-wrap"><select name="daughter_count" id="daughterCount"><option value="0">0</option></select><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span></label>
+                        </div>
+                        <div id="childrenFields"></div>
+                    </div>
+                </div>
+
                 <button class="submit-button" type="submit">
                     <span class="button-text">Submit registration</span>
                     <span class="button-loader" aria-hidden="true"></span>
@@ -120,6 +152,6 @@ if (empty($_SESSION['csrf_token'])) {
         <p id="dialogMessage"></p>
         <button type="button" id="dialogClose">Done</button>
     </dialog>
-    <script src="assets/script.js"></script>
+    <script src="assets/script.js?v=6"></script>
 </body>
 </html>

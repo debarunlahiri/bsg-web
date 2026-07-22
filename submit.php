@@ -44,6 +44,9 @@ $data = [
     'business_name' => value('business_name'),
     'business_category' => value('business_category'),
     'business_address' => value('business_address'),
+    'marital_status' => value('marital_status'),
+    'husband_name' => value('has_husband') === '1' ? value('husband_name') : '',
+    'wife_name' => value('has_wife') === '1' ? value('wife_name') : '',
 ];
 
 $data['mobile'] = preg_replace('/\D+/', '', $data['mobile']) ?? '';
@@ -52,7 +55,7 @@ if (strlen($data['mobile']) === 12 && str_starts_with($data['mobile'], '91')) {
 }
 $data['email'] = strtolower($data['email']);
 
-$required = ['name', 'father_name', 'mobile', 'email', 'house_number', 'locality', 'city', 'state', 'pin_code', 'occupation'];
+$required = ['name', 'father_name', 'mobile', 'email', 'house_number', 'locality', 'city', 'state', 'pin_code', 'occupation', 'marital_status'];
 $errors = [];
 foreach ($required as $field) {
     if ($data[$field] === '') {
@@ -95,11 +98,64 @@ if (!in_array($data['occupation'], ['Business', 'Job', 'Shop', 'Home Maker'], tr
     $errors['occupation'] = 'Select a valid occupation.';
 }
 
-$limits = ['house_number' => 80, 'locality' => 150, 'business_name' => 150, 'business_category' => 150, 'business_address' => 500];
+$familyMembers = [];
+if (!in_array($data['marital_status'], ['Married', 'Unmarried'], true)) {
+    $errors['marital_status'] = 'Select Married or Unmarried.';
+} elseif ($data['marital_status'] === 'Unmarried') {
+    $data['husband_name'] = '';
+    $data['wife_name'] = '';
+} else {
+    $hasHusband = value('has_husband') === '1';
+    $hasWife = value('has_wife') === '1';
+    if ($hasHusband === $hasWife) {
+        $errors['spouse'] = 'Select either Husband or Wife.';
+    }
+    foreach (['husband_name', 'wife_name'] as $spouseField) {
+        $isSelected = ($spouseField === 'husband_name' && $hasHusband) || ($spouseField === 'wife_name' && $hasWife);
+        if ($isSelected && !preg_match("/^[\p{L}][\p{L}\p{M} .'-]{1,99}$/u", $data[$spouseField])) {
+            $errors[$spouseField] = 'Enter a valid name.';
+        }
+    }
+
+    foreach (['sons' => 'Son', 'daughters' => 'Daughter'] as $postKey => $memberType) {
+        $countKey = $postKey === 'sons' ? 'son_count' : 'daughter_count';
+        $count = filter_var($_POST[$countKey] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 0, 'max_range' => 10]]);
+        $members = $_POST[$postKey] ?? [];
+        if ($count === false || !is_array($members) || count($members) !== $count) {
+            $errors[$countKey] = 'Select a valid number from 0 to 10.';
+            continue;
+        }
+        foreach (array_values($members) as $index => $member) {
+            $member = is_array($member) ? $member : [];
+            $memberName = trim((string) ($member['name'] ?? ''));
+            $age = filter_var($member['age'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 0, 'max_range' => 120]]);
+            $memberStatus = trim((string) ($member['marital_status'] ?? ''));
+            if (!preg_match("/^[\p{L}][\p{L}\p{M} .'-]{1,99}$/u", $memberName)) {
+                $errors["{$postKey}[{$index}][name]"] = "Enter a valid {$memberType} name.";
+            }
+            if ($age === false) {
+                $errors["{$postKey}[{$index}][age]"] = 'Enter an age from 0 to 120.';
+            }
+            if (!in_array($memberStatus, ['Married', 'Unmarried'], true)) {
+                $errors["{$postKey}[{$index}][marital_status]"] = 'Select a marital status.';
+            }
+            $familyMembers[] = ['member_type' => $memberType, 'name' => $memberName, 'age' => $age, 'marital_status' => $memberStatus];
+        }
+    }
+}
+
+$limits = ['house_number' => 80, 'locality' => 150, 'business_name' => 150, 'business_category' => 150, 'business_address' => 500, 'husband_name' => 100, 'wife_name' => 100];
 foreach ($limits as $field => $limit) {
     if (mb_strlen($data[$field]) > $limit) {
         $errors[$field] = "Maximum allowed length is {$limit} characters.";
     }
+}
+
+if (mb_strlen($data['house_number']) < 1) {
+    $errors['house_number'] = 'Enter a valid house or flat number.';
+}
+if (mb_strlen($data['locality']) < 2) {
+    $errors['locality'] = 'Enter a valid locality (minimum 2 characters).';
 }
 
 if ($errors !== []) {
@@ -123,14 +179,26 @@ try {
         fail('A registration already exists with these details.', $duplicateErrors, 409);
     }
 
+    $pdo = database();
+    $pdo->beginTransaction();
     $sql = 'INSERT INTO registrations
-        (name, father_name, mobile, email, house_number, locality, city, state, pin_code, occupation, business_name, business_category, business_address)
+        (name, father_name, mobile, email, house_number, locality, city, state, pin_code, occupation, business_name, business_category, business_address, marital_status, husband_name, wife_name)
         VALUES
-        (:name, :father_name, :mobile, :email, :house_number, :locality, :city, :state, :pin_code, :occupation, :business_name, :business_category, :business_address)';
-    database()->prepare($sql)->execute($data);
+        (:name, :father_name, :mobile, :email, :house_number, :locality, :city, :state, :pin_code, :occupation, :business_name, :business_category, :business_address, :marital_status, :husband_name, :wife_name)';
+    $pdo->prepare($sql)->execute($data);
+    $registrationId = (int) $pdo->lastInsertId();
+    $memberStatement = $pdo->prepare(
+        'INSERT INTO family_members (registration_id, member_type, name, age, marital_status)
+         VALUES (:registration_id, :member_type, :name, :age, :marital_status)'
+    );
+    foreach ($familyMembers as $member) {
+        $memberStatement->execute(['registration_id' => $registrationId] + $member);
+    }
+    $pdo->commit();
 
     echo json_encode(['success' => true, 'message' => 'Your registration has been submitted successfully.']);
 } catch (Throwable $error) {
+    if (isset($pdo) && $pdo instanceof PDO && $pdo->inTransaction()) $pdo->rollBack();
     error_log($error->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'We could not save your registration. Please check the database connection and try again.']);

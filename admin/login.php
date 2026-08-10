@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 require __DIR__ . '/_bootstrap.php';
 require_once dirname(__DIR__) . '/config.php';
@@ -62,18 +63,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin sign in</title><link rel="stylesheet" href="admin.css?v=6"></head>
-<body><main class="login-shell"><section class="login-card">
-    <img src="../assets/logo.jpeg" alt="Bhatnagar Sabha Ghaziabad">
-    <p class="eyebrow">Private area</p><h1>Admin sign in</h1>
-    <p class="muted">Only authorized administrators can view registrations.</p>
-    <?php if (isset($_GET['expired'])): ?><div class="notice">Your session expired. Please sign in again.</div><?php endif; ?>
-    <?php if ($error !== ''): ?><div class="error" role="alert"><?= e($error) ?></div><?php endif; ?>
-    <form method="post" autocomplete="off">
-        <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
-        <label>Username<input name="username" maxlength="80" required autocomplete="username"></label>
-        <label>Password<input type="password" name="password" required autocomplete="current-password"></label>
-        <button type="submit">Sign in securely</button>
-    </form>
-    <a class="back-link" href="../"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span>Back to registration form</span></a>
-</section></main></body></html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Admin sign in</title>
+    <link rel="stylesheet" href="admin.css?v=6">
+</head>
+
+<body>
+    <main class="login-shell">
+        <section class="login-card">
+            <img src="../assets/logo.jpeg" alt="Bhatnagar Sabha Ghaziabad">
+            <p class="eyebrow">Private area</p>
+            <h1>Admin sign in</h1>
+            <p class="muted">Only authorized administrators can view registrations.</p>
+            <?php if (isset($_GET['expired'])): ?><div class="notice">Your session expired. Please sign in again.</div><?php endif; ?>
+            <?php if ($error !== ''): ?><div class="error" role="alert"><?= e($error) ?></div><?php endif; ?>
+            <form method="post" autocomplete="off">
+                <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
+                <label>Username<input name="username" maxlength="80" required autocomplete="username"></label>
+                <label>Password<input type="password" name="password" required autocomplete="current-password"></label>
+                <button type="submit">Sign in securely</button>
+            </form>
+            <a class="back-link" href="../"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg><span>Back to registration form</span></a>
+        </section>
+    </main>
+</body>
+
+</html>

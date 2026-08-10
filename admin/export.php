@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 require __DIR__ . '/_bootstrap.php';
 requireAdmin();
@@ -72,10 +73,24 @@ foreach ($rows as $index => $row) {
     $spouseType = $row['husband_name'] ? 'Husband' : ($row['wife_name'] ? 'Wife' : '');
     $spouseName = $row['husband_name'] ?: ($row['wife_name'] ?: '');
     $exportRow = [
-        $index + 1, $row['created_at'], $row['name'], $row['father_name'], $row['mobile'], $row['email'],
-        $row['house_number'], $row['locality'], $row['city'], $row['state'], $row['pin_code'], $row['occupation'],
-        $row['business_name'], $row['business_category'], $row['business_address'], $row['marital_status'],
-        $spouseType, $spouseName,
+        $index + 1,
+        $row['created_at'],
+        $row['name'],
+        $row['father_name'],
+        $row['mobile'],
+        $row['email'],
+        $row['house_number'],
+        $row['locality'],
+        $row['city'],
+        $row['state'],
+        $row['pin_code'],
+        $row['occupation'],
+        $row['business_name'],
+        $row['business_category'],
+        $row['business_address'],
+        $row['marital_status'],
+        $spouseType,
+        $spouseName,
     ];
     $sons = $familyByType[(int) $row['id']]['Son'] ?? [];
     $daughters = $familyByType[(int) $row['id']]['Daughter'] ?? [];

@@ -40,3 +40,10 @@ $RECYCLE.BIN/
 # Local runtime artifacts
 tmp/
 cache/
+
+# User-uploaded matrimonial photographs
+uploads/*
+!uploads/.htaccess
+!uploads/matrimonial/
+uploads/matrimonial/*
+!uploads/matrimonial/.gitkeep

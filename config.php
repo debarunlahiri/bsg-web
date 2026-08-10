@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 function loadEnvironment(string $path): void
@@ -117,6 +118,51 @@ function database(): PDO
             is_active TINYINT(1) NOT NULL DEFAULT 1,
             last_login_at TIMESTAMP NULL DEFAULT NULL,
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    SQL);
+
+    $pdo->exec(<<<SQL
+        CREATE TABLE IF NOT EXISTS matrimonial_registrations (
+            id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            profile_type ENUM('Boy', 'Girl') NOT NULL,
+            full_name VARCHAR(100) NOT NULL,
+            father_name VARCHAR(100) NOT NULL,
+            address TEXT NOT NULL,
+            date_of_birth DATE NOT NULL,
+            birth_time TIME NULL,
+            birth_place VARCHAR(150) NOT NULL,
+            height_cm DECIMAL(5,2) NOT NULL,
+            weight_kg DECIMAL(5,2) NOT NULL,
+            manglik_status ENUM('Manglik', 'Non-Manglik', 'Partial Manglik', 'Not Known') NOT NULL,
+            education TEXT NOT NULL,
+            professional_qualification TEXT NULL,
+            occupation VARCHAR(150) NOT NULL,
+            income_amount DECIMAL(12,2) NULL,
+            income_period ENUM('Monthly', 'Annual') NULL,
+            other_details TEXT NULL,
+            email VARCHAR(150) NOT NULL,
+            mobile VARCHAR(15) NOT NULL,
+            registration_charge DECIMAL(10,2) NULL,
+            payment_method ENUM('Draft', 'Bank Transfer', 'Paytm', 'Cash', 'Other') NULL,
+            payment_reference VARCHAR(100) NULL,
+            payment_date DATE NULL,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_matrimonial_type (profile_type),
+            INDEX idx_matrimonial_mobile (mobile)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    SQL);
+
+    $pdo->exec(<<<SQL
+        CREATE TABLE IF NOT EXISTS matrimonial_images (
+            id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            matrimonial_registration_id BIGINT UNSIGNED NOT NULL,
+            file_name VARCHAR(255) NOT NULL,
+            original_name VARCHAR(255) NOT NULL,
+            mime_type VARCHAR(50) NOT NULL,
+            file_size INT UNSIGNED NOT NULL,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_matrimonial_image_registration (matrimonial_registration_id),
+            CONSTRAINT fk_matrimonial_image_registration FOREIGN KEY (matrimonial_registration_id) REFERENCES matrimonial_registrations(id) ON DELETE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     SQL);
 

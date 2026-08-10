@@ -1,0 +1,281 @@
+:root {
+  font-family: Arial, sans-serif;
+  color: #16243d;
+  background: #eef3fc;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #eef3fc, #fffaf0);
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+.matrimonial-shell {
+  width: min(1120px, calc(100% - 32px));
+  margin: auto;
+  padding: 36px 0 60px;
+}
+.matrimonial-header {
+  margin-bottom: 22px;
+}
+.matrimonial-header .eyebrow {
+  margin: 22px 0 7px;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #1049b5;
+  font-weight: 700;
+  text-decoration: none;
+}
+.back-link svg,
+.type-options svg,
+.upload-row svg,
+.add-image svg,
+.save-button svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.success-message,
+.error-summary {
+  padding: 15px 18px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+}
+.success-message {
+  background: #e9f9ef;
+  color: #156b38;
+}
+.error-summary {
+  background: #fff0ee;
+  color: #9f2118;
+}
+.error-summary ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+.matrimonial-form {
+  display: grid;
+  gap: 18px;
+}
+.type-step,
+.form-section {
+  background: #fff;
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: 0 15px 45px #1049b512;
+}
+.type-step {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+}
+.type-step h2,
+.section-title h2 {
+  margin: 0 0 5px;
+}
+.type-step p,
+.section-title p {
+  margin: 0;
+  color: #687386;
+  font-size: 13px;
+}
+.step-number,
+.section-title > span {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: #1049b5;
+  color: #fff;
+  font-weight: 700;
+}
+.type-options {
+  display: flex;
+  gap: 12px;
+}
+.type-options label {
+  margin: 0;
+}
+.type-options input {
+  position: absolute;
+  opacity: 0;
+}
+.type-options span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 112px;
+  padding: 14px 20px;
+  border: 2px solid #d9e1ee;
+  border-radius: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.type-options input:checked + span {
+  color: #1049b5;
+  border-color: #1049b5;
+  background: #eef4ff;
+}
+.form-content {
+  display: grid;
+  gap: 18px;
+}
+.form-content[hidden] {
+  display: none;
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 23px;
+}
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.field-grid label {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  margin: 0;
+  color: #263753;
+  font-size: 13px;
+  font-weight: 700;
+}
+.field-grid .wide {
+  grid-column: 1/-1;
+}
+.field-grid input,
+.field-grid select,
+.field-grid textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #d9e1ee;
+  border-radius: 10px;
+  background: #fff;
+  color: #16243d;
+}
+.field-grid textarea {
+  resize: vertical;
+}
+.field-grid input:focus,
+.field-grid select:focus,
+.field-grid textarea:focus {
+  outline: 3px solid #1049b51c;
+  border-color: #1049b5;
+}
+.upload-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.upload-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 16px;
+  border: 1px dashed #aab9d1;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.upload-row > span {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.upload-row small {
+  color: #687386;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.upload-row input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.upload-row.invalid {
+  border-color: #c13228;
+  color: #9f2118;
+  background: #fff4f2;
+}
+.add-image {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: 1px solid #ccd8ed;
+  border-radius: 10px;
+  background: #fff;
+  color: #1049b5;
+  font-weight: 700;
+  cursor: pointer;
+}
+.save-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  padding: 15px;
+  border: 0;
+  border-radius: 12px;
+  background: #1049b5;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 25px #1049b538;
+}
+.save-button svg {
+  width: 21px;
+  height: 21px;
+}
+@media (max-width: 760px) {
+  .matrimonial-shell {
+    width: calc(100% - 20px);
+    padding-top: 24px;
+  }
+  .type-step {
+    grid-template-columns: auto 1fr;
+  }
+  .type-options {
+    grid-column: 1/-1;
+    width: 100%;
+  }
+  .type-options label {
+    flex: 1;
+  }
+  .type-options span {
+    justify-content: center;
+    min-width: 0;
+    padding: 13px;
+  }
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+  .upload-list {
+    grid-template-columns: 1fr;
+  }
+  .type-step,
+  .form-section {
+    padding: 20px;
+  }
+}

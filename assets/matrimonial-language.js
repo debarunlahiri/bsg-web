@@ -91,6 +91,7 @@
             addImage: 'एक और फोटो जोड़ें',
             consent: 'मैं पुष्टि करता/करती हूं कि दी गई जानकारी सही है और इसे वैवाहिक परिचय सम्मेलन के लिए उपयोग करने की सहमति देता/देती हूं।',
             submitRegistration: 'पंजीकरण जमा करें',
+            submittingRegistration: 'जमा हो रहा है…',
             needHelp: 'सहायता चाहिए?',
             contactOrganizers: 'आयोजकों से संपर्क करें',
             president: 'अध्यक्ष',
@@ -192,6 +193,7 @@
             addImage: 'Add Another Image',
             consent: 'I confirm that the information provided is correct and consent to its use for the matrimonial introduction conference.',
             submitRegistration: 'Submit Registration',
+            submittingRegistration: 'Submitting…',
             needHelp: 'Need Help?',
             contactOrganizers: 'Contact the Organizers',
             president: 'President',
@@ -238,6 +240,7 @@
     const occupationSelect = document.getElementById('occupationSelect');
     const uploadList = document.getElementById('uploadList');
     const addImage = document.getElementById('addImage');
+    const submitButton = form.querySelector('.submit-registration');
     const maxBytes = 2 * 1024 * 1024;
     const allowedImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
@@ -361,6 +364,15 @@
             const invalidField = form.querySelector(':invalid');
             invalidField?.focus();
             invalidField?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
         }
+
+        submitButton.disabled = true;
+        submitButton.classList.add('is-submitting');
+        submitButton.setAttribute('aria-busy', 'true');
+        submitButton.querySelector('i').className = 'fa-solid fa-spinner';
+        submitButton.querySelector('span').textContent = document.documentElement.lang === 'hi'
+            ? translations.hi.submittingRegistration
+            : translations.en.submittingRegistration;
     });
 })();

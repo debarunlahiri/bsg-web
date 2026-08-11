@@ -244,7 +244,7 @@ $hindiErrors = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="assets/matrimonial.css?v=3">
+    <link rel="stylesheet" href="assets/matrimonial.css?v=6">
 </head>
 
 <body>
@@ -378,7 +378,7 @@ $hindiErrors = [
                     </section>
 
                     <label class="consent"><input type="checkbox" name="consent" value="1" <?= postValue('consent') === '1' ? 'checked' : '' ?> required><span><i class="fa-solid fa-check" aria-hidden="true"></i></span><em data-i18n="consent">मैं पुष्टि करता/करती हूं कि दी गई जानकारी सही है और इसे वैवाहिक परिचय सम्मेलन के लिए उपयोग करने की सहमति देता/देती हूं।</em></label>
-                    <button class="submit-registration" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span data-i18n="submitRegistration">पंजीकरण जमा करें</span></button>
+                    <button class="submit-registration" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span data-i18n="submitRegistration" aria-live="polite">पंजीकरण जमा करें</span></button>
                 </div>
             </form>
         </section>
@@ -392,7 +392,7 @@ $hindiErrors = [
     </main>
 
     <footer><img src="assets/logo.jpeg" alt=""><span data-i18n="copyright">© 2026 भटनागर सभा गाजियाबाद (पंजी.)</span><a href="mailto:bhatnagarkk@gmail.com">bhatnagarkk@gmail.com</a></footer>
-    <script src="assets/matrimonial-language.js?v=3"></script>
+    <script src="assets/matrimonial-language.js?v=4"></script>
 </body>
 
 </html>

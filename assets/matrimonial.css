@@ -523,6 +523,15 @@ a {
     gap: 24px;
 }
 
+#formContent {
+    display: grid;
+    gap: 24px;
+}
+
+#formContent[hidden] {
+    display: none;
+}
+
 .honeypot {
     position: absolute;
     left: -10000px;
@@ -813,6 +822,10 @@ a {
     border-radius: 6px;
     color: transparent;
     background: #fff;
+}
+
+.consent em {
+    font-style: normal;
 }
 
 .consent input:checked + span {
